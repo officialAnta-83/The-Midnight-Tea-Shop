@@ -2,6 +2,8 @@
 
 ![The Midnight Tea Shop Poster](assets/poster.png)
 
+<img src="assets/poster.png" alt="The Midnight Tea Shop Poster" width="700">
+
 > *Brew memory-infused teas at the edge of twilight to help lost spirits recall what matters most.*
 
 **Created by Antabin Das**  
