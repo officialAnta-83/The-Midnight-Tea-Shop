@@ -7,7 +7,14 @@
 <footer class="creator-footer">
     Brewed &amp; Crafted by <span>ANTABIN DAS</span>
 </footer>
-
+<div style="margin-top: 12px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+  <a href="#play-area" style="background: linear-gradient(135deg, #f5b942, #e08e26); color: #191005; text-decoration: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.9rem;">
+    Play Game
+  </a>
+  <a href="assets/poster.png" target="_blank" rel="noopener noreferrer" style="background: rgba(154, 215, 232, 0.16); color: #9ad7e8; border: 1px solid #9ad7e8; text-decoration: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 0.9rem;">
+    Open Poster
+  </a>
+</div>
 
 
     <title>The Midnight Tea Shop</title>
