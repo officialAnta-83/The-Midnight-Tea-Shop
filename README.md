@@ -1,8 +1,19 @@
 # The Midnight Tea Shop
 
-![The Midnight Tea Shop Poster](assets/poster.png)
 
-<img src="assets/poster.png" alt="The Midnight Tea Shop Poster" width="700">
+## Preview Poster
+[![The Midnight Tea Shop Poster](assets/poster.png)](assets/poster.png)
+
+
+
+
+
+## Quick Links
+* 🎮 **[Play the Game](https://officialanta-83.github.io/midnight-tea-shop/)**
+* 🖼️ **[Open Game Poster](assets/poster.png)**
+
+## Preview Poster
+[![The Midnight Tea Shop Poster](assets/poster.png)](assets/poster.png)
 
 > *Brew memory-infused teas at the edge of twilight to help lost spirits recall what matters most.*
 
