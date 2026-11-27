@@ -5,16 +5,16 @@
 [![The Midnight Tea Shop Poster](assets/poster.png)](assets/poster.png)
 
 
-
+**NOTE: It is a DEMO game and consists of list number of characters, for more updates please visit this link 👇**
 
 
 ## Quick Links
-* 🎮 **[Play the Game]https://officialanta-83.github.io/The-Midnight-Tea-Shop/ (DEMO)**
+* 🎮 **[Play the Game]https://officialanta-83.github.io/The-Midnight-Tea-Shop**
 * 🖼️ **[Open Game Poster](assets/poster.png)**
 
 
 **Created by Antabin Das**  
-🎮 **[Play the Game Live]https://officialanta-83.github.io/The-Midnight-Tea-Shop(DEMO)**
+🎮 **[Play the Game Live]https://officialanta-83.github.io/The-Midnight-Tea-Shop**
 
 ---
 
