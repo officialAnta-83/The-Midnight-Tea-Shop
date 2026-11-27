@@ -9,12 +9,12 @@
 
 
 ## Quick Links
-* 🎮 **[Play the Game](https://officialanta-83.github.io/midnight-tea-shop/)**
+* 🎮 **[Play the Game]https://officialanta-83.github.io/The-Midnight-Tea-Shop/**
 * 🖼️ **[Open Game Poster](assets/poster.png)**
 
 
 **Created by Antabin Das**  
-🎮 **[Play the Game Live](https://officialanta-83.github.io/midnight-tea-shop/)**
+🎮 **[Play the Game Live]https://officialanta-83.github.io/The-Midnight-Tea-Shop**
 
 ---
 
