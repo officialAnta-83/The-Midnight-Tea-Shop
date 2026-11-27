@@ -36,3 +36,5 @@ midnight-tea-shop/
 ├── README.md         # Project documentation
 ├── LICENSE           # Copyright and attribution notice
 └── .gitignore        # System and editor ignore rules
+
+Copyright (c) 2026 Antabin Das. All rights reserved.
