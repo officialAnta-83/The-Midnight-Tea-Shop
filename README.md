@@ -1,11 +1,1804 @@
-# The Midnight Tea Shop
+[THE MIDNIGHT TEA SHOP2.html](https://github.com/user-attachments/files/35525740/THE.MIDNIGHT.TEA.SHOP2.html)# The Midnight Tea Shop
 
 
 ## Preview Poster
 [![The Midnight Tea Shop Poster](assets/poster.png)](assets/poster.png)
 
 
-**NOTE: It is a DEMO game and consists of list number of characters, for more updates please visit this link 👇**
+**NOTE: It is a DEMO game and consists of least number of characters, for more updates please visit this link 👇**
+[Up<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+<div style="margin-top: 12px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+  <a href="#play-area" style="background: linear-gradient(135deg, #f5b942, #e08e26); color: #191005; text-decoration: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.9rem;">
+    Play Game
+  </a>
+  <a href="assets/poster.png" target="_blank" rel="noopener noreferrer" style="background: rgba(154, 215, 232, 0.16); color: #9ad7e8; border: 1px solid #9ad7e8; text-decoration: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 0.9rem;">
+    Open Poster
+  </a>
+  
+</div>
+
+
+    <title>The Midnight Tea Shop</title>
+    <!-- Google Fonts: Cormorant Garamond for poetic narrative & Plus Jakarta Sans for clean UI -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+  </section>
+
+
+    <style>
+        :root {
+            --bg-night-deep: #0b0d1e;
+            --bg-twilight: #1a183b;
+            --bg-horizon: #2d2352;
+            --wood-dark: #23140e;
+            --wood-mid: #3a2218;
+            --wood-warm: #543324;
+            --amber-glow: #ffb74d;
+            --gold-bright: #ffe082;
+            --gold-soft: rgba(255, 213, 128, 0.25);
+            --spirit-cyan: #80deea;
+            --spirit-lavender: #ce93d8;
+            --text-cream: #fdf6e3;
+            --text-muted: #cbbba0;
+            --glass-panel: rgba(24, 17, 22, 0.78);
+            --border-gold: rgba(255, 193, 7, 0.32);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(180deg, var(--bg-night-deep) 0%, var(--bg-twilight) 55%, var(--bg-horizon) 100%);
+            color: var(--text-cream);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            
+        }
+        
+
+        h1, h2, h3, .serif-text {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* Background Canvas for Stars, Clouds & Golden Particles */
+        #atmosphere-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Top Navigation / Header Bar */
+        header {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 24px;
+            background: linear-gradient(180deg, rgba(11, 13, 30, 0.85) 0%, rgba(11, 13, 30, 0) 100%);
+        }
+
+        .brand-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-badge span {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: var(--gold-bright);
+            text-shadow: 0 0 15px rgba(255, 183, 77, 0.45);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .keepsake-shelf {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(35, 20, 14, 0.75);
+            border: 1px solid var(--border-gold);
+            padding: 6px 14px;
+            border-radius: 999px;
+            backdrop-filter: blur(8px);
+        }
+
+        .keepsake-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-right: 4px;
+        }
+
+        .keepsake-slot {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed rgba(255, 213, 128, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+
+        .keepsake-slot.unlocked {
+            background: radial-gradient(circle, rgba(255, 224, 130, 0.35), rgba(255, 183, 77, 0.1));
+            border: 1px solid var(--amber-glow);
+            box-shadow: 0 0 12px rgba(255, 183, 77, 0.6);
+            transform: scale(1.1);
+        }
+
+        .icon-btn {
+            background: rgba(35, 20, 14, 0.8);
+            border: 1px solid var(--border-gold);
+            color: var(--gold-bright);
+            padding: 8px 14px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(6px);
+        }
+
+        .icon-btn:hover {
+            background: var(--wood-warm);
+            border-color: var(--amber-glow);
+            box-shadow: 0 0 14px rgba(255, 183, 77, 0.35);
+        }
+
+        /* Decorative Hanging Lanterns */
+        .lantern-row {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            pointer-events: none;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 6%;
+        }
+
+        .lantern {
+            transform-origin: top center;
+            animation: sway 5s ease-in-out infinite alternate;
+            filter: drop-shadow(0 8px 18px rgba(255, 167, 38, 0.55));
+        }
+
+        .lantern:nth-child(2) {
+            animation-duration: 6.2s;
+            animation-delay: -1.5s;
+        }
+
+        @keyframes sway {
+            0% { transform: rotate(-3.5deg); }
+            100% { transform: rotate(3.5deg); }
+        }
+
+        /* Main Screen Container */
+        main {
+            position: relative;
+            z-index: 5;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 20px 28px;
+            width: 100%;
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        /* Title Screen Overlay */
+        #title-screen {
+            text-align: center;
+            max-width: 680px;
+            padding: 44px 32px;
+            background: radial-gradient(circle at center, rgba(44, 27, 20, 0.88) 0%, rgba(20, 14, 24, 0.92) 100%);
+            border: 1px solid var(--border-gold);
+            border-radius: 28px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), inset 0 0 40px rgba(255, 183, 77, 0.08);
+            backdrop-filter: blur(12px);
+            animation: fadeInScale 0.8s ease-out;
+        }
+
+        .title-crest {
+            margin: 0 auto 18px;
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 213, 128, 0.25), transparent 70%);
+            border: 1px solid var(--border-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px rgba(255, 183, 77, 0.25);
+        }
+
+        #title-screen h1 {
+            font-size: clamp(2.5rem, 5vw, 3.8rem);
+            font-weight: 700;
+            color: var(--gold-bright);
+            line-height: 1.1;
+            margin-bottom: 12px;
+            text-shadow: 0 4px 20px rgba(255, 183, 77, 0.4);
+        }
+
+        .tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            color: var(--text-muted);
+            margin-bottom: 26px;
+        }
+
+        .intro-desc {
+            font-size: 0.96rem;
+            line-height: 1.65;
+            color: #e6dcc8;
+            margin-bottom: 32px;
+            padding: 0 12px;
+        }
+
+        .primary-btn {
+            background: linear-gradient(135deg, #ffb74d 0%, #f57c00 100%);
+            color: #1c0f08;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            padding: 15px 38px;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(245, 124, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            letter-spacing: 0.3px;
+        }
+
+        .primary-btn:hover:not(:disabled) {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 12px 32px rgba(255, 183, 77, 0.65);
+        }
+
+        .primary-btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Gameplay Layout Grid */
+        #game-screen {
+            display: none;
+            width: 100%;
+            grid-template-columns: 1.05fr 1fr;
+            gap: 24px;
+            align-items: stretch;
+            animation: fadeInScale 0.6s ease-out;
+        }
+
+        @media (max-width: 920px) {
+            #game-screen {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Left Column: Tea Stall Counter & Spirit Visitor */
+        .stall-stage {
+            background: linear-gradient(180deg, rgba(31, 22, 46, 0.72) 0%, rgba(35, 20, 14, 0.92) 100%);
+            border: 1px solid var(--border-gold);
+            border-radius: 26px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(10px);
+            min-height: 510px;
+        }
+
+        /* Warm Stall Roof Eaves Accent */
+        .stall-eaves {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 14px;
+            background: repeating-linear-gradient(
+                90deg,
+                #4a2818 0px,
+                #4a2818 36px,
+                #2c160c 36px,
+                #2c160c 40px
+            );
+            border-bottom: 2px solid var(--amber-glow);
+            box-shadow: 0 4px 20px rgba(255, 183, 77, 0.3);
+        }
+
+        .visitor-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 6px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+
+        .spirit-stage-center {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 12px 0;
+        }
+
+        .spirit-aura {
+            position: absolute;
+            width: 210px;
+            height: 210px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(128, 222, 234, 0.22) 0%, rgba(206, 147, 216, 0.08) 50%, transparent 72%);
+            filter: blur(8px);
+            transition: all 1s ease;
+            pointer-events: none;
+        }
+
+        .spirit-aura.restored {
+            background: radial-gradient(circle, rgba(255, 224, 130, 0.48) 0%, rgba(255, 167, 38, 0.2) 55%, transparent 75%);
+            transform: scale(1.28);
+        }
+
+        #spirit-svg-container {
+            width: 185px;
+            height: 185px;
+            position: relative;
+            z-index: 2;
+            animation: floatSpirit 4.2s ease-in-out infinite;
+            transition: all 0.9s ease;
+        }
+
+        #spirit-svg-container.ascending {
+            transform: translateY(-45px) scale(1.06);
+            opacity: 0;
+            filter: brightness(1.6) blur(2px);
+        }
+
+        @keyframes floatSpirit {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Wooden Countertop Divider */
+        .wooden-counter {
+            background: linear-gradient(180deg, #5c3726 0%, #381f14 100%);
+            border-top: 2px solid #8d5b42;
+            border-radius: 18px;
+            padding: 18px 20px;
+            position: relative;
+            z-index: 3;
+            box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .spirit-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .spirit-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: var(--gold-bright);
+        }
+
+        .spirit-epithet {
+            font-size: 0.8rem;
+            color: var(--spirit-cyan);
+            font-weight: 500;
+            letter-spacing: 0.4px;
+        }
+
+        .dialogue-box {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.24rem;
+            line-height: 1.52;
+            color: #fff8eb;
+            min-height: 92px;
+        }
+
+        .dialogue-hint-highlight {
+            color: var(--amber-glow);
+            font-style: italic;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(255, 183, 77, 0.3);
+        }
+
+        .spirit-action-row {
+            margin-top: 14px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        /* Right Column: Tea Brewing Station */
+        .brewing-station {
+            background: var(--glass-panel);
+            border: 1px solid var(--border-gold);
+            border-radius: 26px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(12px);
+        }
+
+        .station-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .station-title-row h2 {
+            font-size: 1.65rem;
+            color: var(--gold-bright);
+        }
+
+        .selection-counter {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.06);
+            padding: 4px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Ingredient Shelf Grid */
+        .ingredients-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 11px;
+            margin-bottom: 18px;
+        }
+
+        @media (max-width: 500px) {
+            .ingredients-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .ingredient-card {
+            background: linear-gradient(145deg, rgba(58, 34, 24, 0.72), rgba(32, 19, 14, 0.88));
+            border: 1px solid rgba(255, 213, 128, 0.18);
+            border-radius: 16px;
+            padding: 12px 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+            text-align: left;
+            position: relative;
+        }
+
+        .ingredient-card:hover:not(:disabled) {
+            transform: translateY(-2px);
+            border-color: rgba(255, 183, 77, 0.55);
+            background: linear-gradient(145deg, rgba(78, 46, 32, 0.85), rgba(42, 25, 18, 0.92));
+        }
+
+        .ingredient-card.selected {
+            border-color: var(--amber-glow);
+            background: linear-gradient(145deg, rgba(112, 66, 32, 0.88), rgba(56, 31, 18, 0.95));
+            box-shadow: 0 0 18px rgba(255, 183, 77, 0.32), inset 0 0 12px rgba(255, 224, 130, 0.15);
+        }
+
+        .ingredient-card:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .ing-icon-wrap {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            flex-shrink: 0;
+            background: rgba(0, 0, 0, 0.28);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .ing-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .ing-name {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-cream);
+            line-height: 1.25;
+        }
+
+        .ing-tags {
+            font-size: 0.74rem;
+            color: var(--amber-glow);
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        /* Teapot & Hearth Brewing Area */
+        .teapot-hearth {
+            background: radial-gradient(circle at bottom, rgba(255, 143, 0, 0.16) 0%, rgba(20, 13, 12, 0.85) 75%);
+            border: 1px solid rgba(255, 183, 77, 0.25);
+            border-radius: 20px;
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .selected-slots-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            width: 100%;
+            margin-bottom: 14px;
+        }
+
+        .brew-slot {
+            flex: 1;
+            max-width: 195px;
+            height: 46px;
+            border-radius: 12px;
+            border: 1px dashed rgba(255, 213, 128, 0.35);
+            background: rgba(0, 0, 0, 0.28);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .brew-slot.filled {
+            border-style: solid;
+            border-color: var(--amber-glow);
+            background: rgba(255, 183, 77, 0.14);
+            color: var(--gold-bright);
+            font-weight: 600;
+        }
+
+        .teapot-visual-wrap {
+            position: relative;
+            width: 110px;
+            height: 82px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        /* Rising Steam Wisps */
+        .steam-wisp {
+            position: absolute;
+            top: -12px;
+            width: 8px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255, 248, 231, 0.38);
+            filter: blur(4px);
+            animation: riseSteam 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .steam-wisp:nth-child(1) { left: 42px; animation-delay: 0s; }
+        .steam-wisp:nth-child(2) { left: 54px; animation-delay: 1s; height: 30px; }
+        .steam-wisp:nth-child(3) { left: 64px; animation-delay: 2s; }
+
+        @keyframes riseSteam {
+            0% { transform: translateY(6px) scaleX(0.8); opacity: 0; }
+            45% { opacity: 0.65; }
+            100% { transform: translateY(-28px) scaleX(1.6); opacity: 0; }
+        }
+
+        .teapot-brewing {
+            animation: kettleBubble 0.45s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 16px rgba(255, 183, 77, 0.75));
+        }
+
+        @keyframes kettleBubble {
+            0% { transform: rotate(-2deg) scale(1.02); }
+            100% { transform: rotate(2deg) scale(1.06); }
+        }
+
+        .brew-controls {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .secondary-btn {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-cream);
+            border: 1px solid rgba(255, 213, 128, 0.3);
+            padding: 12px 18px;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .secondary-btn:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: var(--gold-bright);
+        }
+
+        .secondary-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* End of Shift Ledger Screen */
+        #ledger-screen {
+            display: none;
+            max-width: 780px;
+            width: 100%;
+            background: radial-gradient(circle at top, rgba(48, 30, 22, 0.94) 0%, rgba(20, 14, 24, 0.96) 100%);
+            border: 1px solid var(--border-gold);
+            border-radius: 28px;
+            padding: 36px 32px;
+            box-shadow: 0 25px 65px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(14px);
+            text-align: center;
+            animation: fadeInScale 0.7s ease-out;
+        }
+
+        #ledger-screen h2 {
+            font-size: 2.5rem;
+            color: var(--gold-bright);
+            margin-bottom: 6px;
+        }
+
+        .ledger-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .ledger-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-bottom: 28px;
+            text-align: left;
+        }
+
+        @media (max-width: 640px) {
+            .ledger-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .ledger-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 193, 7, 0.25);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .ledger-keepsake-icon {
+            font-size: 1.8rem;
+            background: rgba(255, 183, 77, 0.15);
+            border: 1px solid var(--amber-glow);
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .ledger-card h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            color: var(--gold-bright);
+            margin-bottom: 2px;
+        }
+
+        .ledger-keepsake-title {
+            font-size: 0.78rem;
+            color: var(--amber-glow);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .ledger-memory-text {
+            font-size: 0.84rem;
+            color: #e0d6c3;
+            line-height: 1.45;
+        }
+
+        /* Toast Notification */
+        #toast-banner {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(90px);
+            background: rgba(35, 20, 14, 0.95);
+            border: 1px solid var(--amber-glow);
+            color: var(--gold-bright);
+            padding: 10px 22px;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            z-index: 50;
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            pointer-events: none;
+        }
+
+        #toast-banner.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.96) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .copyright {
+    width: 100%;
+    text-align: center;
+    margin-top: 25px;
+    padding: 20px 10px;
+    color: #d6c5a3;
+    font-size: 14px;
+}
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Twinkling Stars, Drifting Clouds & Brewing Sparkles -->
+    <canvas id="atmosphere-canvas"></canvas>
+
+    <!-- Gently Swaying Paper Lanterns -->
+    <div class="lantern-row" aria-hidden="true">
+        <svg class="lantern" width="46" height="92" viewBox="0 0 46 92">
+            <line x1="23" y1="0" x2="23" y2="20" stroke="#8d6e63" stroke-width="2"/>
+            <rect x="14" y="18" width="18" height="5" rx="2" fill="#3e2723"/>
+            <ellipse cx="23" cy="45" rx="16" ry="24" fill="url(#lanternGrad)"/>
+            <path d="M12 32 Q23 36 34 32 M10 45 Q23 49 36 45 M12 58 Q23 62 34 58" stroke="#bf360c" stroke-width="1.2" fill="none" opacity="0.55"/>
+            <rect x="15" y="67" width="16" height="5" rx="2" fill="#3e2723"/>
+            <line x1="23" y1="72" x2="23" y2="88" stroke="#ffb74d" stroke-width="2"/>
+            <defs>
+                <radialGradient id="lanternGrad" cx="50%" cy="50%" r="55%">
+                    <stop offset="0%" stop-color="#fff8e1"/>
+                    <stop offset="45%" stop-color="#ffb74d"/>
+                    <stop offset="100%" stop-color="#e65100"/>
+                </radialGradient>
+            </defs>
+        </svg>
+
+        <svg class="lantern" width="46" height="92" viewBox="0 0 46 92">
+            <line x1="23" y1="0" x2="23" y2="24" stroke="#8d6e63" stroke-width="2"/>
+            <rect x="14" y="22" width="18" height="5" rx="2" fill="#3e2723"/>
+            <ellipse cx="23" cy="49" rx="16" ry="24" fill="url(#lanternGrad)"/>
+            <path d="M12 36 Q23 40 34 36 M10 49 Q23 53 36 49 M12 62 Q23 66 34 62" stroke="#bf360c" stroke-width="1.2" fill="none" opacity="0.55"/>
+            <rect x="15" y="71" width="16" height="5" rx="2" fill="#3e2723"/>
+            <line x1="23" y1="76" x2="23" y2="91" stroke="#ffb74d" stroke-width="2"/>
+        </svg>
+    </div>
+
+    <!-- Top Header with Memory Keepsake Shelf & Ambient Audio Toggle -->
+    <header>
+        <div class="brand-badge">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+                <path d="M4 11H16V14C16 17.3137 13.3137 20 10 20C6.68629 20 4 17.3137 4 14V11Z" fill="#ffb74d"/>
+                <path d="M16 12H18.5C19.8807 12 21 13.1193 21 14.5C21 15.8807 19.8807 17 18.5 17H16" stroke="#ffb74d" stroke-width="2"/>
+                <path d="M7 7C7 5.5 8.5 5 8.5 3.5M11 7C11 5.5 12.5 5 12.5 3.5" stroke="#ffe082" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+            <span>The Midnight Tea Shop</span>
+        </div>
+
+        <div class="header-controls">
+            <div class="keepsake-shelf" title="Memory Keepsakes Restored Tonight">
+                <span class="keepsake-label">Keepsakes</span>
+                <div class="keepsake-slot" id="slot-0">?</div>
+                <div class="keepsake-slot" id="slot-1">?</div>
+                <div class="keepsake-slot" id="slot-2">?</div>
+                <div class="keepsake-slot" id="slot-3">?</div>
+            </div>
+
+            <button class="icon-btn" id="audio-toggle-btn" aria-label="Toggle Ambient Sound">
+                <span id="audio-icon">🔇</span>
+                <span id="audio-text">Sound Off</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Interactive Stage -->
+    <main>
+        <!-- 1. Title Screen -->
+         <div id="intro screen">
+
+         
+         <section id="title-screen">
+             <div class="title-crest">
+                 <svg width="46" height="46" viewBox="0 0 48 48" fill="none">
+                    <path d="M10 22H32V27C32 33.0751 27.0751 38 21 38C14.9249 38 10 33.0751 10 27V22Z" fill="#ffb74d"/>
+                    <path d="M32 24H36C38.7614 24 41 26.2386 41 29C41 31.7614 38.7614 34 36 34H32" stroke="#ffb74d" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M16 15C16 12 19 11 19 8M22 15C22 12 25 11 25 8M28 15C28 12 31 11 31 8" stroke="#ffe082" stroke-width="2.2" stroke-linecap="round"/>
+                    <circle cx="38" cy="11" r="2" fill="#ffe082"/>
+                    <circle cx="11" cy="12" r="1.5" fill="#80deea"/>
+                </svg>
+            </div>
+            <h1>The Midnight Tea Shop</h1>
+            <p class="tagline">"Brewing forgotten memories at the edge of the afterlife"</p>
+            <p class="intro-desc">
+                Between the waking world and the stars beyond, lost souls drift into your lantern-lit wooden stall. 
+                Listen closely to the fragments of their stories, combine two surreal ingredients in your kettle, 
+                and brew the warm cup of tea that restores their final core memory.
+            </p>
+            <button class="primary-btn" id="start-shift-btn">Begin Shift</button>
+        </section>
+
+          <footer class="copyright">
+          Brewed & Crafted by ANTABIN DAS —
+          © 2026 Antabin Das. All rights reserved.
+           </footer>
+</div>
+
+        <!-- 2. Active Gameplay Screen -->
+        <section id="game-screen">
+            <!-- Left Panel: Spirit Counter & Narrative -->
+            <div class="stall-stage">
+                <div class="stall-eaves"></div>
+
+                <div class="visitor-progress">
+                    <span id="visitor-counter-text">Visitor 1 of 4</span>
+                    <span id="spirit-status-badge" style="color: var(--spirit-cyan);">● Awaiting Tea</span>
+                </div>
+
+                <div class="spirit-stage-center">
+                    <div class="spirit-aura" id="spirit-aura"></div>
+                    <div id="spirit-svg-container"></div>
+                </div>
+
+                <div class="wooden-counter">
+                    <div class="spirit-header">
+                        <h3 class="spirit-name" id="spirit-name">Arthur</h3>
+                        <span class="spirit-epithet" id="spirit-epithet">The Elderly Clockmaker</span>
+                    </div>
+                    <div class="dialogue-box" id="spirit-dialogue"></div>
+                    <div class="spirit-action-row" id="spirit-action-row"></div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Ingredient Shelf & Brewing Kettle -->
+            <div class="brewing-station">
+                <div>
+                    <div class="station-title-row">
+                        <h2>Apothecary Shelf</h2>
+                        <span class="selection-counter" id="selection-counter">0 / 2 Ingredients</span>
+                    </div>
+
+                    <div class="ingredients-grid" id="ingredients-grid"></div>
+                </div>
+
+                <div class="teapot-hearth">
+                    <div class="selected-slots-row">
+                        <div class="brew-slot" id="brew-slot-0">Select 1st Essence</div>
+                        <span style="color: var(--amber-glow); font-weight: 700;">+</span>
+                        <div class="brew-slot" id="brew-slot-1">Select 2nd Essence</div>
+                    </div>
+
+                    <div class="teapot-visual-wrap">
+                        <div class="steam-wisp"></div>
+                        <div class="steam-wisp"></div>
+                        <div class="steam-wisp"></div>
+                        <svg id="teapot-svg" width="96" height="74" viewBox="0 0 96 74" fill="none">
+                            <!-- Handle -->
+                            <path d="M24 28C12 28 10 46 24 48" stroke="#8d6e63" stroke-width="4.5" stroke-linecap="round"/>
+                            <!-- Spout -->
+                            <path d="M70 44C80 42 84 32 88 26" stroke="#d7ccc8" stroke-width="5" stroke-linecap="round"/>
+                            <!-- Pot Body -->
+                            <ellipse cx="48" cy="44" rx="25" ry="19" fill="url(#potGrad)"/>
+                            <!-- Gold Band -->
+                            <path d="M24 42Q48 48 72 42" stroke="#ffb74d" stroke-width="2.5" fill="none"/>
+                            <!-- Lid & Knob -->
+                            <ellipse cx="48" cy="26" rx="14" ry="4" fill="#5d4037"/>
+                            <circle cx="48" cy="20" r="4" fill="#ffb74d"/>
+                            <defs>
+                                <radialGradient id="potGrad" cx="40%" cy="35%" r="65%">
+                                    <stop offset="0%" stop-color="#795548"/>
+                                    <stop offset="65%" stop-color="#4e342e"/>
+                                    <stop offset="100%" stop-color="#2c1914"/>
+                                </radialGradient>
+                            </defs>
+                        </svg>
+                    </div>
+
+                    <div class="brew-controls">
+                        <button class="secondary-btn" id="clear-btn" disabled>Clear</button>
+                        <button class="primary-btn" id="brew-btn" disabled>Brew &amp; Serve Tea</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. End of Shift Summary Ledger -->
+        <section id="ledger-screen">
+            <h2>The Night's Ledger</h2>
+            <p class="ledger-subtitle">"Every cup poured bridges a memory across the stars."</p>
+            <div class="ledger-list" id="ledger-list"></div>
+            <button class="primary-btn" id="replay-btn">Open the Stall Again</button>
+        </section>
+    </main>
+
+    <!-- Subtle Floating Toast Feedback -->
+    <div id="toast-banner"></div>
+
+    <script>
+        /**
+         * ============================================================================
+         * 1. GAME DATA: SURREAL INGREDIENTS & SPECTRAL VISITORS
+         * ============================================================================
+         */
+        const INGREDIENTS = [
+            {
+                id: 'monsoon',
+                name: 'Drop of First Monsoon Rain',
+                tags: 'Nostalgia • Longing',
+                icon: '🌧️',
+                color: '#4fc3f7'
+            },
+            {
+                id: 'radio',
+                name: 'Whisper of an Old Radio',
+                tags: 'Time • Waiting',
+                icon: '📻',
+                color: '#ffb74d'
+            },
+            {
+                id: 'starlight',
+                name: 'Starlight Dust',
+                tags: 'Promise • Wonder',
+                icon: '✨',
+                color: '#fff176'
+            },
+            {
+                id: 'hearth',
+                name: 'Ember of a Dying Hearth',
+                tags: 'Warmth • Home',
+                icon: '🔥',
+                color: '#ff7043'
+            },
+            {
+                id: 'bell',
+                name: 'Echo of a Silver Bell',
+                tags: 'Melody • Joy',
+                icon: '🔔',
+                color: '#ce93d8'
+            },
+            {
+                id: 'lotus',
+                name: 'Petal of a Midnight Lotus',
+                tags: 'Peace • Letting Go',
+                icon: '🪷',
+                color: '#80cbc4'
+            }
+        ];
+
+        const SPIRITS = [
+            {
+                id: 'clockmaker',
+                name: 'Arthur',
+                epithet: 'The Elderly Clockmaker',
+                ideal: ['radio', 'lotus'],
+                keepsakeIcon: ' pocket-watch',
+                keepsakeEmoji: '🕰️',
+                keepsakeName: 'Stopped Brass Pocket Watch',
+                introHTML: `"Good evening, keeper... My pocket watch stopped at 11:58, yet I stayed behind on the platform. I hear the <span class='dialogue-hint-highlight'>ticking of time and static of an old broadcast</span>, waiting for someone... I'm so tired. Perhaps I only need a taste of <span class='dialogue-hint-highlight'>quiet peace to finally let go</span>."`,
+                partialDialogue: `"Mmm... there is a familiar warmth in this cup, like half a remembered dream. It eases my weary shoulders, though the final chime still eludes me. Shall we try another blend, or let me rest with this?"`,
+                mismatchDialogue: `"Oh, bless your kindness, keeper, though this flavor belongs to someone else's youth. My old heart is anchored to waiting and quiet release. Could you brew another pot?"`,
+                restoredDialogue: `"*Sighs warmly as golden light fills his hands* ...I remember now. My daughter already arrived safely across the sea years ago—she told me not to wait at the station anymore. Thank you, keeper. My watch can rest now."`,
+                ledgerSummary: 'Remembered his daughter’s safe arrival and found peace to move on.'
+            },
+            {
+                id: 'violinist',
+                name: 'Clara',
+                epithet: 'The Young Violinist',
+                ideal: ['bell', 'starlight'],
+                keepsakeEmoji: '🎻',
+                keepsakeName: 'Crystalline Tuning Fork',
+                introHTML: `"The concert hall went dark before my encore... My bow is silent, and the last notes slipped right through my fingers. I'm searching for that <span class='dialogue-hint-highlight'>bright, ringing melody of pure joy</span>—the one we played beneath a <span class='dialogue-hint-highlight'>sky full of wonder and promises</span>."`,
+                partialDialogue: `"Ooh, a single note just shimmered in my mind! It's so close to the chorus I wrote... One essence matches my song, though the harmony isn't quite whole yet."`,
+                mismatchDialogue: `"It's a lovely brew, truly, like rain on an empty stage—but my strings remain quiet. I need something that chimes with music and starlit wonder."`,
+                restoredDialogue: `"*Eyes widen as spectral musical notes dance around her* ...Yes! That's the final crescendo! I played it for my little brother so he wouldn't be afraid of the dark. The melody is whole again!"`,
+                ledgerSummary: 'Rediscovered the final starlit melody she composed for her brother.'
+            },
+            {
+                id: 'traveler',
+                name: 'Kabir',
+                epithet: 'The Wandering Monsoon Traveler',
+                ideal: ['monsoon', 'hearth'],
+                keepsakeEmoji: '🧭',
+                keepsakeName: 'Brass Compass of Return',
+                introHTML: `"My boots are soaked from a thousand miles of mist, yet I can't recall which door was mine. All I remember is the <span class='dialogue-hint-highlight'>scent of the very first monsoon rain</span> hitting red earth, and the <span class='dialogue-hint-highlight'>cozy glow of a kitchen fire</span> welcoming me back."`,
+                partialDialogue: `"Aha... that aroma takes me halfway down the lane! I can almost see the lantern on the porch, though the doorway is still misty. Want to adjust the blend?"`,
+                mismatchDialogue: `"A curious cup, friend, like stardust in a teacup—wonderful for poets, though a weary traveler like me longs for rain-washed earth and a warm hearth."`,
+                restoredDialogue: `"*Laughs softly as steam curls into the shape of a cottage* ...Amma’s ginger tea by the hearth! The storm is over, and I know the road home by heart now. Safe travels, keeper."`,
+                ledgerSummary: 'Found his way back to the warmth of his family’s monsoon hearth.'
+            },
+            {
+                id: 'stargazer',
+                name: 'Lyra',
+                epithet: 'The Midnight Stargazer',
+                ideal: ['starlight', 'monsoon'],
+                keepsakeEmoji: '🔭',
+                keepsakeName: 'Prism of Twin Constellations',
+                introHTML: `"Every night I climbed the observatory hill with my telescope, waiting for a meteor shower... and a friend. I remember the <span class='dialogue-hint-highlight'>silver dust of distant constellations</span>, and how we laughed when a sudden <span class='dialogue-hint-highlight'>childhood rainstorm</span> drenched our star charts. What was their name?"`,
+                partialDialogue: `"Look at the surface of the tea—a tiny constellation is twinkling! One memory sparked, though the name on the tip of my tongue is still shy."`,
+                mismatchDialogue: `"It tastes warm and peaceful, like an old library, yet my telescope stays cloudy. I need the sparkle of the cosmos and the nostalgia of our rainy evening."`,
+                restoredDialogue: `"*Gasps as golden sparks swirl from the teacup* ...Leo! His name was Leo, and we carved our initials on the observatory rail! Even across lifetimes, we never broke our promise."`,
+                ledgerSummary: 'Recalled the name of her childhood friend beneath the meteor shower.'
+            }
+        ];
+
+        /**
+         * Custom Bespoke SVG Portraits for Each Spectral Visitor
+         */
+        function getSpiritSVG(spiritId) {
+            switch (spiritId) {
+                case 'clockmaker':
+                    return `
+                    <svg viewBox="0 0 200 200" width="100%" height="100%">
+                        <defs>
+                            <linearGradient id="ghostBody1" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#e0f7fa" stop-opacity="0.95"/>
+                                <stop offset="70%" stop-color="#80deea" stop-opacity="0.65"/>
+                                <stop offset="100%" stop-color="#80deea" stop-opacity="0"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- Spectral Coat Silhouette -->
+                        <path d="M55 175 Q60 100 100 95 Q140 100 145 175 Q122 162 100 175 Q78 162 55 175 Z" fill="url(#ghostBody1)"/>
+                        <!-- Head -->
+                        <circle cx="100" cy="68" r="26" fill="#e0f7fa" opacity="0.92"/>
+                        <!-- Bowler Hat -->
+                        <ellipse cx="100" cy="46" rx="34" ry="7" fill="#4dd0e1"/>
+                        <path d="M76 46 Q78 24 100 24 Q122 24 124 46 Z" fill="#26c6da"/>
+                        <!-- Kind Eyes & Mustache -->
+                        <circle cx="91" cy="67" r="2.5" fill="#1a237e"/>
+                        <circle cx="109" cy="67" r="2.5" fill="#1a237e"/>
+                        <path d="M88 77 Q100 72 112 77" stroke="#b2ebf2" stroke-width="4" stroke-linecap="round" fill="none"/>
+                        <!-- Floating Pocket Watch -->
+                        <circle cx="144" cy="118" r="13" fill="#ffe082" stroke="#ffb74d" stroke-width="2.5"/>
+                        <path d="M144 118 L144 110 M144 118 L150 118" stroke="#5d4037" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M124 112 Q134 126 144 105" stroke="#ffe082" stroke-width="1.5" fill="none" stroke-dasharray="2 2"/>
+                    </svg>`;
+                case 'violinist':
+                    return `
+                    <svg viewBox="0 0 200 200" width="100%" height="100%">
+                        <defs>
+                            <linearGradient id="ghostBody2" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#f3e5f5" stop-opacity="0.95"/>
+                                <stop offset="75%" stop-color="#ce93d8" stop-opacity="0.62"/>
+                                <stop offset="100%" stop-color="#ce93d8" stop-opacity="0"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- Flowing Dress Silhouette -->
+                        <path d="M52 178 Q68 98 100 94 Q132 98 148 178 Q125 166 100 178 Q75 166 52 178 Z" fill="url(#ghostBody2)"/>
+                        <!-- Flowing Hair -->
+                        <path d="M72 64 Q64 95 74 116 M128 64 Q136 95 126 116" stroke="#e1bee7" stroke-width="7" stroke-linecap="round" fill="none"/>
+                        <!-- Head -->
+                        <circle cx="100" cy="66" r="24" fill="#f3e5f5" opacity="0.95"/>
+                        <!-- Gentle Eyes & Smile -->
+                        <path d="M89 65 Q92 62 95 65" stroke="#4a148c" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+                        <path d="M105 65 Q108 62 111 65" stroke="#4a148c" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+                        <path d="M95 75 Q100 79 105 75" stroke="#4a148c" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        <!-- Ethereal Violin & Musical Note -->
+                        <ellipse cx="134" cy="122" rx="10" ry="15" transform="rotate(-25 134 122)" fill="#ffe082" opacity="0.9"/>
+                        <line x1="120" y1="100" x2="146" y2="140" stroke="#ffb74d" stroke-width="3" stroke-linecap="round"/>
+                        <text x="52" y="92" fill="#ffe082" font-size="20">♪</text>
+                    </svg>`;
+                case 'traveler':
+                    return `
+                    <svg viewBox="0 0 200 200" width="100%" height="100%">
+                        <defs>
+                            <linearGradient id="ghostBody3" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#e0f2f1" stop-opacity="0.95"/>
+                                <stop offset="75%" stop-color="#4db6ac" stop-opacity="0.62"/>
+                                <stop offset="100%" stop-color="#4db6ac" stop-opacity="0"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- Traveler Cloak -->
+                        <path d="M48 176 Q62 96 100 92 Q138 96 152 176 Q126 164 100 176 Q74 164 48 176 Z" fill="url(#ghostBody3)"/>
+                        <!-- Cozy Scarf -->
+                        <path d="M76 88 Q100 102 124 88 L128 102 Q100 114 72 102 Z" fill="#ffb74d" opacity="0.9"/>
+                        <path d="M114 98 L122 134 L110 132 Z" fill="#ffa726" opacity="0.85"/>
+                        <!-- Head -->
+                        <circle cx="100" cy="65" r="24" fill="#e0f2f1" opacity="0.95"/>
+                        <!-- Eyes -->
+                        <circle cx="92" cy="64" r="2.5" fill="#004d40"/>
+                        <circle cx="108" cy="64" r="2.5" fill="#004d40"/>
+                        <path d="M95 73 Q100 77 105 73" stroke="#004d40" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        <!-- Floating Lantern Staff -->
+                        <line x1="56" y1="74" x2="56" y2="165" stroke="#b2dfdb" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="56" cy="66" r="8" fill="#ffe082"/>
+                    </svg>`;
+                case 'stargazer':
+                default:
+                    return `
+                    <svg viewBox="0 0 200 200" width="100%" height="100%">
+                        <defs>
+                            <linearGradient id="ghostBody4" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#ede7f6" stop-opacity="0.95"/>
+                                <stop offset="75%" stop-color="#9575cd" stop-opacity="0.65"/>
+                                <stop offset="100%" stop-color="#9575cd" stop-opacity="0"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- Starry Cape -->
+                        <path d="M50 176 Q64 96 100 92 Q136 96 150 176 Q125 164 100 176 Q75 164 50 176 Z" fill="url(#ghostBody4)"/>
+                        <!-- Head & Crescent Hairpin -->
+                        <circle cx="100" cy="66" r="24" fill="#ede7f6" opacity="0.95"/>
+                        <path d="M78 48 Q100 32 122 48" stroke="#b39ddb" stroke-width="8" stroke-linecap="round" fill="none"/>
+                        <circle cx="118" cy="48" r="4" fill="#ffe082"/>
+                        <!-- Wonder-filled Eyes -->
+                        <circle cx="92" cy="66" r="2.8" fill="#311b92"/>
+                        <circle cx="108" cy="66" r="2.8" fill="#311b92"/>
+                        <circle cx="93" cy="65" r="1" fill="#ffffff"/>
+                        <circle cx="109" cy="65" r="1" fill="#ffffff"/>
+                        <!-- Floating Starlight -->
+                        <path d="M142 78 L145 85 L152 88 L145 91 L142 98 L139 91 L132 88 L139 85 Z" fill="#ffe082"/>
+                        <circle cx="62" cy="112" r="3" fill="#fff59d"/>
+                    </svg>`;
+            }
+        }
+
+        /**
+         * ============================================================================
+         * 2. WEB AUDIO SYNTHESIZER (COZY RAIN + CELESTIAL CHIMES)
+         * ============================================================================
+         */
+        class CozyAudioEngine {
+            constructor() {
+                this.ctx = null;
+                this.isPlaying = false;
+                this.rainGain = null;
+                this.chimeInterval = null;
+            }
+
+            init() {
+                if (this.ctx) return;
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                this.ctx = new AudioCtx();
+
+                // Soft Lo-Fi Rain / Warm Vinyl Ambience via Filtered Pink Noise
+                const bufferSize = this.ctx.sampleRate * 3;
+                const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+                const output = noiseBuffer.getChannelData(0);
+                let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+                for (let i = 0; i < bufferSize; i++) {
+                    const white = Math.random() * 2 - 1;
+                    b0 = 0.99886 * b0 + white * 0.0555179;
+                    b1 = 0.99332 * b1 + white * 0.0750759;
+                    b2 = 0.96900 * b2 + white * 0.1538520;
+                    b3 = 0.86650 * b3 + white * 0.3104856;
+                    b4 = 0.55000 * b4 + white * 0.5329522;
+                    b5 = -0.7616 * b5 - white * 0.0168980;
+                    output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
+                    output[i] *= 0.04;
+                    b6 = white * 0.115926;
+                }
+
+                const whiteNoise = this.ctx.createBufferSource();
+                whiteNoise.buffer = noiseBuffer;
+                whiteNoise.loop = true;
+
+                const filter = this.ctx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.value = 620;
+
+                this.rainGain = this.ctx.createGain();
+                this.rainGain.gain.value = 0;
+
+                whiteNoise.connect(filter);
+                filter.connect(this.rainGain);
+                this.rainGain.connect(this.ctx.destination);
+                whiteNoise.start(0);
+            }
+
+            toggle() {
+                this.init();
+                if (this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+                this.isPlaying = !this.isPlaying;
+
+                if (this.isPlaying) {
+                    this.rainGain.gain.setTargetAtTime(0.22, this.ctx.currentTime, 0.5);
+                    this.startWindChimes();
+                } else {
+                    this.rainGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.3);
+                    if (this.chimeInterval) clearInterval(this.chimeInterval);
+                }
+                return this.isPlaying;
+            }
+
+            playChime(freq, duration = 2.4, volume = 0.07) {
+                if (!this.isPlaying || !this.ctx) return;
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now);
+
+                gain.gain.setValueAtTime(0.0001, now);
+                gain.gain.exponentialRampToValueAtTime(volume, now + 0.06);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+
+                osc.start(now);
+                osc.stop(now + duration);
+            }
+
+            startWindChimes() {
+                // Pentatonic twilight scale (C5, D5, E5, G5, A5, C6)
+                const notes = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.50];
+                this.chimeInterval = setInterval(() => {
+                    if (Math.random() > 0.35) {
+                        const note = notes[Math.floor(Math.random() * notes.length)];
+                        this.playChime(note, 3.0, 0.045);
+                    }
+                }, 3200);
+            }
+
+            playSelectSound() {
+                this.playChime(659.25, 0.7, 0.06);
+            }
+
+            playBrewSuccessSound() {
+                if (!this.isPlaying || !this.ctx) return;
+                const chord = [523.25, 659.25, 783.99, 1046.50];
+                chord.forEach((n, idx) => {
+                    setTimeout(() => this.playChime(n, 2.8, 0.065), idx * 140);
+                });
+            }
+        }
+
+        const audioEngine = new CozyAudioEngine();
+
+        /**
+         * ============================================================================
+         * 3. ATMOSPHERIC CANVAS (TWINKLING STARS, DRIFTING CLOUDS & GOLDEN SPARKLES)
+         * ============================================================================
+         */
+        const canvas = document.getElementById('atmosphere-canvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        let clouds = [];
+        let sparkles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function initAtmosphere() {
+            resizeCanvas();
+            stars = Array.from({ length: 85 }, () => ({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height * 0.78,
+                r: Math.random() * 1.8 + 0.4,
+                phase: Math.random() * Math.PI * 2,
+                speed: Math.random() * 0.02 + 0.008
+            }));
+
+            clouds = Array.from({ length: 5 }, (_, i) => ({
+                x: (canvas.width / 4) * i,
+                y: canvas.height * (0.58 + Math.random() * 0.28),
+                rx: 180 + Math.random() * 140,
+                ry: 42 + Math.random() * 25,
+                vx: 0.14 + Math.random() * 0.12
+            }));
+        }
+
+        function spawnGoldenSparkles(count = 36) {
+            const centerX = canvas.width * 0.5;
+            const centerY = canvas.height * 0.52;
+            for (let i = 0; i < count; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 2.6 + 0.6;
+                sparkles.push({
+                    x: centerX + (Math.random() - 0.5) * 160,
+                    y: centerY + (Math.random() - 0.5) * 120,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed - 1.2,
+                    size: Math.random() * 3.5 + 1.5,
+                    life: 1.0,
+                    decay: Math.random() * 0.014 + 0.008
+                });
+            }
+        }
+
+        function animateAtmosphere() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Twinkling Stars
+            stars.forEach(s => {
+                s.phase += s.speed;
+                const alpha = 0.35 + Math.sin(s.phase) * 0.45;
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 248, 225, ${Math.max(0.1, alpha)})`;
+                ctx.fill();
+            });
+
+            // Draw Drifting Twilight Mist Clouds
+            clouds.forEach(c => {
+                c.x += c.vx;
+                if (c.x - c.rx > canvas.width) c.x = -c.rx;
+
+                const grad = ctx.createRadialGradient(c.x, c.y, 10, c.x, c.y, c.rx);
+                grad.addColorStop(0, 'rgba(130, 110, 190, 0.12)');
+                grad.addColorStop(1, 'rgba(45, 35, 82, 0)');
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.ellipse(c.x, c.y, c.rx, c.ry, 0, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // Draw Golden Memory Sparkles
+            for (let i = sparkles.length - 1; i >= 0; i--) {
+                const p = sparkles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life -= p.decay;
+
+                if (p.life <= 0) {
+                    sparkles.splice(i, 1);
+                    continue;
+                }
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 224, 130, ${p.life})`;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#ffb74d';
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+
+            requestAnimationFrame(animateAtmosphere);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+
+        /**
+         * ============================================================================
+         * 4. GAME STATE & CORE INTERACTION LOOP
+         * ============================================================================
+         */
+        let currentSpiritIndex = 0;
+        let selectedIngredients = [];
+        let isBrewing = false;
+        let spiritResolved = false;
+        let shiftResults = [];
+
+        // DOM References
+        const titleScreen = document.getElementById('title-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const ledgerScreen = document.getElementById('ledger-screen');
+
+        const ingredientsGrid = document.getElementById('ingredients-grid');
+        const selectionCounter = document.getElementById('selection-counter');
+        const brewSlot0 = document.getElementById('brew-slot-0');
+        const brewSlot1 = document.getElementById('brew-slot-1');
+        const clearBtn = document.getElementById('clear-btn');
+        const brewBtn = document.getElementById('brew-btn');
+        const teapotSvg = document.getElementById('teapot-svg');
+
+        const visitorCounterText = document.getElementById('visitor-counter-text');
+        const spiritStatusBadge = document.getElementById('spirit-status-badge');
+        const spiritAura = document.getElementById('spirit-aura');
+        const spiritSvgContainer = document.getElementById('spirit-svg-container');
+        const spiritNameEl = document.getElementById('spirit-name');
+        const spiritEpithetEl = document.getElementById('spirit-epithet');
+        const spiritDialogueEl = document.getElementById('spirit-dialogue');
+        const spiritActionRow = document.getElementById('spirit-action-row');
+        const toastBanner = document.getElementById('toast-banner');
+
+        function showToast(msg) {
+            toastBanner.textContent = msg;
+            toastBanner.classList.add('show');
+            setTimeout(() => toastBanner.classList.remove('show'), 2600);
+        }
+
+        function renderIngredientShelf() {
+            ingredientsGrid.innerHTML = '';
+            INGREDIENTS.forEach(ing => {
+                const isSelected = selectedIngredients.includes(ing.id);
+                const card = document.createElement('button');
+                card.className = `ingredient-card ${isSelected ? 'selected' : ''}`;
+                card.disabled = isBrewing || spiritResolved;
+                card.innerHTML = `
+                    <div class="ing-icon-wrap" style="box-shadow: inset 0 0 12px ${ing.color}25;">
+                        ${ing.icon}
+                    </div>
+                    <div class="ing-info">
+                        <span class="ing-name">${ing.name}</span>
+                        <span class="ing-tags">${ing.tags}</span>
+                    </div>
+                `;
+                card.addEventListener('click', () => toggleIngredient(ing.id));
+                ingredientsGrid.appendChild(card);
+            });
+        }
+
+        function updateBrewingSlots() {
+            selectionCounter.textContent = `${selectedIngredients.length} / 2 Ingredients`;
+
+            if (selectedIngredients[0]) {
+                const ing0 = INGREDIENTS.find(i => i.id === selectedIngredients[0]);
+                brewSlot0.textContent = `${ing0.icon} ${ing0.name}`;
+                brewSlot0.classList.add('filled');
+            } else {
+                brewSlot0.textContent = 'Select 1st Essence';
+                brewSlot0.classList.remove('filled');
+            }
+
+            if (selectedIngredients[1]) {
+                const ing1 = INGREDIENTS.find(i => i.id === selectedIngredients[1]);
+                brewSlot1.textContent = `${ing1.icon} ${ing1.name}`;
+                brewSlot1.classList.add('filled');
+            } else {
+                brewSlot1.textContent = 'Select 2nd Essence';
+                brewSlot1.classList.remove('filled');
+            }
+
+            clearBtn.disabled = selectedIngredients.length === 0 || isBrewing || spiritResolved;
+            brewBtn.disabled = selectedIngredients.length !== 2 || isBrewing || spiritResolved;
+        }
+
+        function toggleIngredient(id) {
+            if (isBrewing || spiritResolved) return;
+            audioEngine.playSelectSound();
+
+            if (selectedIngredients.includes(id)) {
+                selectedIngredients = selectedIngredients.filter(item => item !== id);
+            } else {
+                if (selectedIngredients.length >= 2) {
+                    showToast('Your kettle holds 2 essences at a time.');
+                    return;
+                }
+                selectedIngredients.push(id);
+            }
+
+            renderIngredientShelf();
+            updateBrewingSlots();
+        }
+
+        function clearSelection() {
+            selectedIngredients = [];
+            renderIngredientShelf();
+            updateBrewingSlots();
+        }
+
+        function loadSpirit(index) {
+            const spirit = SPIRITS[index];
+            currentSpiritIndex = index;
+            selectedIngredients = [];
+            spiritResolved = false;
+            isBrewing = false;
+
+            visitorCounterText.textContent = `Visitor ${index + 1} of ${SPIRITS.length}`;
+            spiritStatusBadge.textContent = '● Awaiting Tea';
+            spiritStatusBadge.style.color = 'var(--spirit-cyan)';
+
+            spiritAura.classList.remove('restored');
+            spiritSvgContainer.classList.remove('ascending');
+            spiritSvgContainer.innerHTML = getSpiritSVG(spirit.id);
+
+            spiritNameEl.textContent = spirit.name;
+            spiritEpithetEl.textContent = spirit.epithet;
+            spiritDialogueEl.innerHTML = spirit.introHTML;
+            spiritActionRow.innerHTML = '';
+
+            renderIngredientShelf();
+            updateBrewingSlots();
+        }
+
+        function brewAndServeTea() {
+            if (selectedIngredients.length !== 2 || isBrewing || spiritResolved) return;
+
+            isBrewing = true;
+            renderIngredientShelf();
+            updateBrewingSlots();
+            teapotSvg.classList.add('teapot-brewing');
+            spiritStatusBadge.textContent = '✦ Steeping Memories...';
+            spiritStatusBadge.style.color = 'var(--amber-glow)';
+            spawnGoldenSparkles(28);
+
+            setTimeout(() => {
+                teapotSvg.classList.remove('teapot-brewing');
+                isBrewing = false;
+                evaluateTeaServe();
+            }, 1350);
+        }
+
+        function evaluateTeaServe() {
+            const spirit = SPIRITS[currentSpiritIndex];
+            const matches = selectedIngredients.filter(id => spirit.ideal.includes(id)).length;
+
+            if (matches === 2) {
+                // Perfect Memory Restoration!
+                spiritResolved = true;
+                audioEngine.playBrewSuccessSound();
+                spawnGoldenSparkles(55);
+
+                spiritAura.classList.add('restored');
+                spiritStatusBadge.textContent = '★ Memory Restored';
+                spiritStatusBadge.style.color = 'var(--gold-bright)';
+                spiritDialogueEl.innerHTML = spirit.restoredDialogue;
+
+                // Unlock Keepsake on Top Shelf
+                const slot = document.getElementById(`slot-${currentSpiritIndex}`);
+                slot.textContent = spirit.keepsakeEmoji;
+                slot.classList.add('unlocked');
+                slot.title = `${spirit.keepsakeName} (${spirit.name})`;
+
+                shiftResults[currentSpiritIndex] = {
+                    spirit,
+                    restored: true
+                };
+
+                const nextBtn = document.createElement('button');
+                nextBtn.className = 'primary-btn';
+                nextBtn.style.padding = '10px 24px';
+                nextBtn.style.fontSize = '0.92rem';
+                nextBtn.textContent = currentSpiritIndex < SPIRITS.length - 1
+                    ? 'Bid Farewell & Welcome Next Soul →'
+                    : 'Close Stall & View Night’s Ledger →';
+                nextBtn.addEventListener('click', advanceToNextSpirit);
+
+                spiritActionRow.innerHTML = '';
+                spiritActionRow.appendChild(nextBtn);
+            } else if (matches === 1) {
+                // Partial Match: Gentle Hint + Option to Retry or Move On
+                audioEngine.playSelectSound();
+                spawnGoldenSparkles(18);
+                spiritStatusBadge.textContent = '◐ Flicker of Recognition';
+                spiritStatusBadge.style.color = '#ffe082';
+                spiritDialogueEl.innerHTML = spirit.partialDialogue;
+
+                renderRetryOrPassButtons(spirit, false);
+                clearSelection();
+            } else {
+                // Mismatched Brew: Empathetic Reaction + Retry
+                spiritStatusBadge.textContent = '○ Wrong Essence';
+                spiritStatusBadge.style.color = 'var(--spirit-lavender)';
+                spiritDialogueEl.innerHTML = spirit.mismatchDialogue;
+
+                renderRetryOrPassButtons(spirit, true);
+                clearSelection();
+            }
+
+            renderIngredientShelf();
+            updateBrewingSlots();
+        }
+
+        function renderRetryOrPassButtons(spirit, isFullMismatch) {
+            spiritActionRow.innerHTML = '';
+
+            const listenAgainBtn = document.createElement('button');
+            listenAgainBtn.className = 'secondary-btn';
+            listenAgainBtn.style.padding = '8px 16px';
+            listenAgainBtn.style.fontSize = '0.84rem';
+            listenAgainBtn.textContent = 'Recall Their Story';
+            listenAgainBtn.addEventListener('click', () => {
+                spiritDialogueEl.innerHTML = spirit.introHTML;
+            });
+            spiritActionRow.appendChild(listenAgainBtn);
+
+            if (!isFullMismatch) {
+                const gentlePassBtn = document.createElement('button');
+                gentlePassBtn.className = 'secondary-btn';
+                gentlePassBtn.style.padding = '8px 16px';
+                gentlePassBtn.style.fontSize = '0.84rem';
+                gentlePassBtn.textContent = 'Let Them Rest Gently →';
+                gentlePassBtn.addEventListener('click', () => {
+                    shiftResults[currentSpiritIndex] = {
+                        spirit,
+                        restored: false
+                    };
+                    advanceToNextSpirit();
+                });
+                spiritActionRow.appendChild(gentlePassBtn);
+            }
+        }
+
+        function advanceToNextSpirit() {
+            spiritSvgContainer.classList.add('ascending');
+            setTimeout(() => {
+                if (currentSpiritIndex < SPIRITS.length - 1) {
+                    loadSpirit(currentSpiritIndex + 1);
+                } else {
+                    showLedgerScreen();
+                }
+            }, 650);
+        }
+
+        function showLedgerScreen() {
+            gameScreen.style.display = 'none';
+            ledgerScreen.style.display = 'block';
+
+            const ledgerList = document.getElementById('ledger-list');
+            ledgerList.innerHTML = '';
+
+            shiftResults.forEach(entry => {
+                const card = document.createElement('div');
+                card.className = 'ledger-card';
+                card.innerHTML = `
+                    <div class="ledger-keepsake-icon">
+                        ${entry.restored ? entry.spirit.keepsakeEmoji : '🕯️'}
+                    </div>
+                    <div>
+                        <h4>${entry.spirit.name} — ${entry.spirit.epithet}</h4>
+                        <div class="ledger-keepsake-title">
+                            ${entry.restored ? `Keepsake: ${entry.spirit.keepsakeName}` : 'Parted in Quiet Peace'}
+                        </div>
+                        <p class="ledger-memory-text">
+                            ${entry.restored ? entry.spirit.ledgerSummary : 'Drifted onward with a warm cup of tea and a gentle smile.'}
+                        </p>
+                    </div>
+                `;
+                ledgerList.appendChild(card);
+            });
+        }
+        
+
+        function resetGame() {
+            shiftResults = [];
+            for (let i = 0; i < 4; i++) {
+                const slot = document.getElementById(`slot-${i}`);
+                slot.textContent = '?';
+                slot.classList.remove('unlocked');
+                slot.title = '';
+            }
+            ledgerScreen.style.display = 'none';
+            gameScreen.style.display = 'grid';
+            loadSpirit(0);
+        }
+
+        // Event Listeners
+        document.getElementById('start-shift-btn').addEventListener('click', () => {
+            titleScreen.style.display = 'none';
+            gameScreen.style.display = 'grid';
+            loadSpirit(0);
+            spawnGoldenSparkles(30);
+        });
+
+        clearBtn.addEventListener('click', clearSelection);
+        brewBtn.addEventListener('click', brewAndServeTea);
+        document.getElementById('replay-btn').addEventListener('click', resetGame);
+
+        document.getElementById('audio-toggle-btn').addEventListener('click', () => {
+            const active = audioEngine.toggle();
+            document.getElementById('audio-icon').textContent = active ? '🔊' : '🔇';
+            document.getElementById('audio-text').textContent = active ? 'Ambience On' : 'Sound Off';
+        });
+
+        // Boot Atmosphere on Load
+        window.onload = () => {
+            initAtmosphere();
+            animateAtmosphere();
+        };
+    </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>
+loading THE MIDNIGHT TEA SHOP2.html…]()
+
 
 
 ## Quick Links
